@@ -1,0 +1,47 @@
+[Version]
+Signature="$Windows NT$"
+Class=Media
+ClassGuid={4d36e96c-e325-11ce-bfc1-08002be10318}
+Provider=%ManufacturerName%
+CatalogFile=NetAudioCable.cat
+DriverVer= ; set by stampinf at build
+PnpLockDown=1
+
+[SourceDisksNames]
+1=%DiskName%
+
+[SourceDisksFiles]
+NetAudioCable.sys=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[Manufacturer]
+%ManufacturerName%=DefaultManufacturer,NT$ARCH$
+
+[DefaultManufacturer.NT$ARCH$]
+%DeviceDesc%=NetAudioCableDeviceInstall,ROOT\NetAudioCable
+
+[NetAudioCableDeviceInstall.NT]
+CopyFiles=DriverFiles
+
+[DriverFiles]
+NetAudioCable.sys
+
+[NetAudioCableDeviceInstall.NT.Services]
+AddService=NetAudioCableService,0x00000002,NetAudioCableServiceInstall
+
+[NetAudioCableServiceInstall]
+DisplayName=%ServiceDisplayName%
+Description=%ServiceDesc%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\NetAudioCable.sys
+
+[Strings]
+ManufacturerName="Heaven"
+DiskName = "NetAudioCable Installation Disk"
+DeviceDesc = "NetAudioCable Device"
+ServiceDisplayName = "NetAudioCable Service"
+ServiceDesc = "Transmits audio via udp to remote server"
